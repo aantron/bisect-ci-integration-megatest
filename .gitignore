@@ -1,0 +1,5 @@
+_build/
+_coverage/
+.merlin
+*.out
+coverage.json

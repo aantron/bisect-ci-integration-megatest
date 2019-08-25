@@ -1,0 +1,28 @@
+sudo: required
+
+language: generic
+
+before_script:
+  - wget https://github.com/ocaml/opam/releases/download/2.0.5/opam-2.0.5-x86_64-linux
+  - sudo mv opam-2.0.5-x86_64-linux /usr/local/bin/opam
+  - sudo chmod a+x /usr/local/bin/opam
+  - opam init -y --compiler 4.08.1 --disable-sandboxing --disable-shell-hook
+  - eval `opam config env`
+  - opam --version
+  - ocaml -version
+  - opam install -y --deps-only .
+
+script:
+  - dune build ./simple.exe
+  - dune exec ./simple.exe -- travis
+  - bisect-ppx-report -I _build/default --coveralls coverage.json bisect*.out
+  - curl -L -F json_file=@./coverage.json https://coveralls.io/api/v1/jobs
+
+cache:
+  directories:
+    - $HOME/.opam
+
+notifications:
+  email:
+    on_success: always
+    on_failure: always
