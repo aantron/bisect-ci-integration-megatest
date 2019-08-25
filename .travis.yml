@@ -17,7 +17,7 @@ script:
   - dune exec ./simple.exe -- travis
 
   # Travis => Coveralls.io.
-  - bisect-ppx-report -I _build/default --coveralls coverage.json --service-name travis-ci --service-job-id $TRAVIS_JOB_ID bisect*.out
+  - bisect-ppx-report --coveralls coverage.json --service-name travis-ci --service-job-id $TRAVIS_JOB_ID bisect*.out
   - curl -L -F json_file=@./coverage.json https://coveralls.io/api/v1/jobs
 
 cache:
