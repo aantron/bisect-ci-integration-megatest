@@ -16,9 +16,13 @@ script:
   - dune build ./simple.exe
   - dune exec ./simple.exe -- travis
 
-  # Travis => Coveralls.io.
+  # Travis => Coveralls
   - bisect-ppx-report --coveralls coverage.json --service-name travis-ci --service-job-id $TRAVIS_JOB_ID bisect*.out
   - curl -L -F json_file=@./coverage.json https://coveralls.io/api/v1/jobs
+
+  # Travis => Codecov
+  - bisect-ppx-report --coveralls excoveralls.json --service-name travis-ci --service-job-id $TRAVIS_JOB_ID bisect*.out
+  - bash <(curl -s https://codecov.io/bash)
 
 cache:
   directories:
