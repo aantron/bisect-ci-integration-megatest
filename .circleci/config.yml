@@ -1,5 +1,8 @@
 version: 2
 
+cache_key: &cache_key
+  key: v2-opam-deps-{{ checksum "integrations.opam" }}-{{ checksum "ocaml-version" }}
+
 jobs:
   build:
     docker:
@@ -16,10 +19,12 @@ jobs:
             eval `opam config env`
             opam --version
             ocaml -version
+            ocaml -version > ocaml-version
+      - restore_cache:
+          <<: *cache_key
       - run:
-          name: Install dependencies
+          name: opam dependencies
           command: |
-            opam update
             opam install -y --deps-only .
       - run:
           name: Run test
@@ -27,3 +32,11 @@ jobs:
             eval `opam config env`
             dune build ./simple.exe
             dune exec ./simple.exe -- circleci
+      - run:
+          name: Cleanup for caching
+          command: |
+            opam clean
+      - save_cache:
+          <<: *cache_key
+          paths:
+            - ~/.opam/4.08
