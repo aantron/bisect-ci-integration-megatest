@@ -5,6 +5,6 @@ let () =
   | "travis" ->
     print_endline "Travis"
   | _ ->
-    print_endline "Unknown CI"
+    assert false
   | exception Invalid_argument _ ->
-    print_endline "No CI specified"
+    assert false
