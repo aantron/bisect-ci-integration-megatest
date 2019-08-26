@@ -1,0 +1,29 @@
+version: 2
+
+jobs:
+  build:
+    docker:
+      - image: ocaml/opam2:4.08
+    environment:
+      - TERM: dumb
+
+    steps:
+      - checkout
+      - run:
+          name: System dependencies
+          command: |
+            sudo apt-get install -y m4
+            eval `opam config env`
+            opam --version
+            ocaml -version
+      - run:
+          name: Install dependencies
+          command: |
+            opam update
+            opam install -y --deps-only .
+      - run:
+          name: Run test
+          command: |
+            eval `opam config env`
+            dune build ./simple.exe
+            dune exec ./simple.exe -- circleci
