@@ -33,6 +33,12 @@ jobs:
             dune build ./simple.exe
             dune exec ./simple.exe -- circleci
       - run:
+          name: Send to Coveralls
+          command: |
+            eval `opam config env`
+            bisect-ppx-report --coveralls coverage.json --service-name circle-ci --service-job-id $CIRCLE_BUILD_NUM --repo-token $COVERALLS_REPO_TOKEN bisect*.out
+            curl -L -F json_file=@./coverage.json https://coveralls.io/api/v1/jobs
+      - run:
           name: Cleanup for caching
           command: |
             opam clean
