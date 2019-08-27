@@ -18,11 +18,10 @@ script:
   - dune exec ./simple.exe -- travis
 
   # Travis => Coveralls
-  - bisect-ppx-report --coveralls coverage.json --service-name travis-ci --service-job-id $TRAVIS_JOB_ID bisect*.out
-  - curl -L -F json_file=@./coverage.json https://coveralls.io/api/v1/jobs
+  - bisect-ppx-report --send-to Coveralls
 
   # Travis => Codecov
-  - bisect-ppx-report --coveralls excoveralls.json --service-name travis-ci --service-job-id $TRAVIS_JOB_ID bisect*.out
+  - bisect-ppx-report --coveralls excoveralls.json --service-name travis-ci --service-job-id $TRAVIS_JOB_ID bisect*.coverage
   - bash <(curl -s https://codecov.io/bash)
 
   # Clean up ~/.opam for better Travis caching.
