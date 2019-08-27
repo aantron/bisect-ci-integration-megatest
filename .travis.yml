@@ -25,7 +25,10 @@ script:
   - bisect-ppx-report --send-to Codecov
 
   # Clean up ~/.opam for better Travis caching.
+  - opam remove -y bisect_ppx
+  - opam pin remove -y bisect_ppx
   - opam clean
+  - rm -rf ~/.opam/4.08.1/.opam-switch/sources
 
 cache:
   directories:
