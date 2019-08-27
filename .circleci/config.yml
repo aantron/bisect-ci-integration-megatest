@@ -25,6 +25,7 @@ jobs:
       - run:
           name: opam dependencies
           command: |
+            opam reinstall -y bisect_ppx
             opam install -y --deps-only .
       - run:
           name: Run test
@@ -36,7 +37,7 @@ jobs:
           name: Send to Coveralls
           command: |
             eval `opam config env`
-            bisect-ppx-report --send-to Coveralls --repo-token $COVERALLS_REPO_TOKEN
+            bisect-ppx-report --send-to Coveralls
       - run:
           name: Cleanup for caching
           command: |
