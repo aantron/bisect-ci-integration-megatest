@@ -21,7 +21,7 @@ script:
   - bisect-ppx-report --send-to Coveralls
 
   # Travis => Codecov
-  - bisect-ppx-report --coveralls excoveralls.json --service-name travis-ci --service-job-id $TRAVIS_JOB_ID bisect*.coverage
+  - bisect-ppx-report --coveralls excoveralls.json --service-name travis-ci --service-job-id $TRAVIS_JOB_ID
   - bash <(curl -s https://codecov.io/bash)
 
   # Clean up ~/.opam for better Travis caching.

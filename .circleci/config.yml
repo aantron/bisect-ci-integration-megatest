@@ -1,7 +1,7 @@
 version: 2
 
 cache_key: &cache_key
-  key: v2-opam-deps-{{ checksum "integrations.opam" }}-{{ checksum "ocaml-version" }}
+  key: v3-opam-deps-{{ checksum "integrations.opam" }}-{{ checksum "ocaml-version" }}
 
 jobs:
   build:
@@ -36,8 +36,7 @@ jobs:
           name: Send to Coveralls
           command: |
             eval `opam config env`
-            bisect-ppx-report --coveralls coverage.json --service-name circle-ci --service-job-id $CIRCLE_BUILD_NUM --repo-token $COVERALLS_REPO_TOKEN bisect*.out
-            curl -L -F json_file=@./coverage.json https://coveralls.io/api/v1/jobs
+            bisect-ppx-report --send-to Coveralls --repo-token $COVERALLS_REPO_TOKEN
       - run:
           name: Cleanup for caching
           command: |
