@@ -37,7 +37,7 @@ jobs:
           name: Send to Coveralls
           command: |
             eval `opam config env`
-            bisect-ppx-report --send-to Coveralls
+            bisect-ppx-report --send-to Coveralls --git
       - run:
           name: Cleanup for caching
           command: |
