@@ -13,5 +13,5 @@ depends: [
 ]
 
 pin-depends: [
-  ["bisect_ppx.git" "git+https://github.com/aantron/bisect_ppx.git#git-info"]
+  ["bisect_ppx.git" "git+https://github.com/aantron/bisect_ppx.git"]
 ]
