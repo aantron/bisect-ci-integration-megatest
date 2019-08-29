@@ -1,0 +1,18 @@
+language: generic
+
+script:
+  - set -e
+  - echo $DEPLOY_KEY | base64 -d > ~/.ssh/megatest
+  - chmod 400 ~/.ssh/megatest
+  - echo >> ~/.ssh/config
+  - echo "Host github.com" >> ~/.ssh/config
+  - echo "  IdentityFile ~/.ssh/megatest" >> ~/.ssh/config
+  - git clone git@github.com:aantron/bisect-ci-integration-megatest.git repo
+  - cd repo
+  - git config user.name "Anton Bachin"
+  - git config user.email "antonbachin@yahoo.com"
+  - git fetch
+  - git checkout scheduled || git checkout -b scheduled
+  - git reset --hard master
+  - git commit --allow-empty -m "Scheduled build (cron)"
+  - git push -u -f origin scheduled
