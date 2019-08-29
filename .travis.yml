@@ -19,10 +19,10 @@ script:
   - dune exec ./simple.exe -- travis
 
   # Travis => Coveralls
-  - bisect-ppx-report --send-to Coveralls
+  - bisect-ppx-report send-to Coveralls
 
   # Travis => Codecov
-  - bisect-ppx-report --send-to Codecov
+  - bisect-ppx-report send-to Codecov
 
   # Clean up ~/.opam for better Travis caching.
   - opam remove -y bisect_ppx

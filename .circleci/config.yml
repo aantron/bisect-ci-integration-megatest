@@ -1,7 +1,7 @@
 version: 2
 
 cache_key: &cache_key
-  key: v3-opam-deps-{{ checksum "integrations.opam" }}-{{ checksum "ocaml-version" }}
+  key: v4-opam-deps-{{ checksum "integrations.opam" }}-{{ checksum "ocaml-version" }}
 
 jobs:
   build:
@@ -37,7 +37,7 @@ jobs:
           name: Send to Coveralls
           command: |
             eval `opam config env`
-            bisect-ppx-report --send-to Coveralls
+            bisect-ppx-report send-to Coveralls
       - run:
           name: Cleanup for caching
           command: |
