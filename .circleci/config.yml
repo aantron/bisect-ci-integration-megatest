@@ -39,6 +39,12 @@ jobs:
             eval `opam config env`
             bisect-ppx-report send-to Coveralls
       - run:
+          name: Send to Codecov
+          command: |
+            eval `opam config env`
+            bisect-ppx-report coveralls excoveralls.json
+            curl -s https://codecov.io/bash | bash -s -- -Z
+      - run:
           name: Cleanup for caching
           command: |
             opam clean
