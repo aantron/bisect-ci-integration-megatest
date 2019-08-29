@@ -37,7 +37,7 @@ jobs:
           name: Send to Coveralls
           command: |
             eval `opam config env`
-            bisect-ppx-report send-to Coveralls
+            bisect-ppx-report send-to Coveralls --service-pull-request "$CIRCLE_PULL_REQUEST"
       - run:
           name: Cleanup for caching
           command: |
