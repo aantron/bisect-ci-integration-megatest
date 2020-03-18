@@ -16,5 +16,5 @@ jobs:
       - run: opam exec -- dune build ./simple.exe
       - run: opam exec -- dune exec ./simple.exe -- github
 
-      - run: bisect-ppx-report send-to Coveralls
-      - run: bisect-ppx-report send-to Codecov
+      - run: opam exec -- bisect-ppx-report send-to Coveralls
+      - run: opam exec -- bisect-ppx-report send-to Codecov
