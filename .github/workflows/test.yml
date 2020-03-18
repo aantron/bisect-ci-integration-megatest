@@ -10,8 +10,6 @@ jobs:
         with:
           submodules: recursive
       - uses: avsm/setup-ocaml@master
-        with:
-          ocaml-version: ${{ matrix.ocaml }}
       - run: opam reinstall -y bisect_ppx
       - run: opam install -y --deps-only .
 
