@@ -5,7 +5,7 @@ let () =
   | "travis" ->
     print_endline "Travis"
   | "github" ->
-    print_endline "Github Actions"
+    print_endline "GitHub Actions"
   | _ ->
     assert false
   | exception Invalid_argument _ ->
