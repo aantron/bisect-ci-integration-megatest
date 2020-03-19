@@ -1,7 +1,7 @@
 version: 2
 
 cache_key: &cache_key
-  key: v4-opam-deps-{{ checksum "integrations.opam" }}-{{ checksum "ocaml-version" }}
+  key: v5-opam-deps-{{ checksum "integrations.opam" }}-{{ checksum "ocaml-version" }}
 
 jobs:
   build:
