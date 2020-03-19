@@ -10,5 +10,3 @@ let () =
     assert false
   | exception Invalid_argument _ ->
     assert false
-
-(* test *)
