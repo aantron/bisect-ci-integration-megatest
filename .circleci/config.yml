@@ -6,7 +6,7 @@ cache_key: &cache_key
 jobs:
   build:
     docker:
-      - image: ocaml/opam2:4.08
+      - image: ocaml/opam2:4.11
     environment:
       - TERM: dumb
     branches:
@@ -30,12 +30,12 @@ jobs:
           command: |
             opam reinstall -y bisect_ppx
             opam install -y --deps-only .
+            opam list
       - run:
           name: Run test
           command: |
             eval `opam config env`
-            dune build ./simple.exe
-            dune exec ./simple.exe -- circleci
+            dune exec --instrument-with bisect_ppx ./simple.exe -- circleci
       - run:
           name: Send to Coveralls
           command: |
@@ -47,10 +47,10 @@ jobs:
             eval `opam config env`
             bisect-ppx-report send-to Codecov
       - run:
-          name: Cleanup for caching
+          name: Clean up for caching
           command: |
             opam clean
       - save_cache:
           <<: *cache_key
           paths:
-            - ~/.opam/4.08
+            - ~/.opam/4.11

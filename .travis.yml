@@ -3,20 +3,20 @@ sudo: required
 language: generic
 
 before_script:
-  - wget https://github.com/ocaml/opam/releases/download/2.0.5/opam-2.0.5-x86_64-linux
-  - sudo mv opam-2.0.5-x86_64-linux /usr/local/bin/opam
+  - wget https://github.com/ocaml/opam/releases/download/2.0.7/opam-2.0.7-x86_64-linux
+  - sudo mv opam-2.0.7-x86_64-linux /usr/local/bin/opam
   - sudo chmod a+x /usr/local/bin/opam
-  - opam init -y --compiler 4.08.1 --disable-sandboxing --disable-shell-hook
+  - opam init -y --compiler 4.11.1 --disable-sandboxing --disable-shell-hook
   - eval `opam config env`
   - opam --version
   - ocaml -version
   - opam reinstall -y bisect_ppx
   - opam install -y --deps-only .
+  - opam list
 
 script:
   # Run the "code under test."
-  - dune build ./simple.exe
-  - dune exec ./simple.exe -- travis
+  - dune exec --instrument-with bisect_ppx ./simple.exe -- travis
 
   # Travis => Coveralls
   - bisect-ppx-report send-to Coveralls
@@ -28,7 +28,7 @@ script:
   - opam remove -y bisect_ppx
   - opam pin remove -y bisect_ppx
   - opam clean
-  - rm -rf ~/.opam/4.08.1/.opam-switch/sources
+  - rm -rf ~/.opam/4.11.1/.opam-switch/sources
 
 cache:
   directories:

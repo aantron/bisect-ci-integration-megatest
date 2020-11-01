@@ -12,9 +12,9 @@ jobs:
       - uses: avsm/setup-ocaml@master
       - run: opam reinstall -y bisect_ppx
       - run: opam install -y --deps-only .
+      - run: opam list
 
-      - run: opam exec -- dune build ./simple.exe
-      - run: opam exec -- dune exec ./simple.exe -- github
+      - run: opam exec -- dune exec --instrument-with bisect_ppx ./simple.exe -- github
 
       - run: opam exec -- bisect-ppx-report send-to Coveralls
         env:
